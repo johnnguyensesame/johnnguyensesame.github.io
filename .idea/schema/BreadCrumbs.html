@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8XRJPKJVEM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-8XRJPKJVEM');
+    </script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="\\sesameSchema.css">
+    <title>Bread Crumbs Schema</title>
+</head>
+<body>
+<!--Schema Suite Navigation-->
+<ul class="nav">
+    <li><a href="/schema/practiceSchema.html">Practice</a></li>
+    <li><a href="/schema/serviceSchema.html">Services</a></li>
+    <li><a href="/schema/reviewSchema.html">Testimonials</a></li>
+    <li><a href="/schema/doctorSchema.html">Doctor</a></li>
+    <li><a href="/schema/meetTheTeamSchema.html">Meet The Team</a></li>
+    <li><a href="/schema/imageSchema.html">Image/Video</a></li>
+    <li><a href="/schema/FAQSchema.html">FAQ</a></li>
+    <li><a href="/schema/BreadCrumbSchema.html" style="font-weight: bold; color: blue;">Bread Crumb</a></li>
+    <li><a href="/schema/SERPs.html">SERPv1</a></li>
+</ul>
+<div class="row">
+    <div class="col-sm container">
+        <table>
+            <tr>
+                <td><strong>*</strong></strog>Page Name:</td>
+                <td><input type="text" id="pageName" size="45" autocomplete="off" placeholder="Blog"></td>
+            </tr>
+            <tr>
+                <td>Page URL:</td>
+                <td><input type="text" id="pageURL" size="45" autocomplete="off" placeholder="https://example.com/blog"></td>
+            </tr>
+        </table>
+        </br>
+        <button onclick="addBread()">Add</button>&nbsp;<button onclick="takeBread()">Remove</button></br>
+        <strong>Select:</strong> <span style="color: #007bff;" onclick="select(id);">Schema</span></br>
+        <a href="https://search.google.com/structured-data/testing-tool">JSON-LD Validator</a>(F5/Refresh to clear form)</br>
+        <a href="https://github.com/gunyen/schemaForDentistAndOrthodontist">Github Repository</a>
+
+    </div>
+    <div id="schema" onclick="select(id);" class="col-sm container">
+        <p>
+            &lt;script type="application/ld+json"&gt;</br>
+            {</br>
+            &nbsp;&nbsp;&nbsp;"@context": "https://schema.org",</br>
+            &nbsp;&nbsp;&nbsp;"@type": "BreadcrumbList",</br>
+            &nbsp;&nbsp;&nbsp;"itemListElement": [<span id="crumb"></span>]</br>
+            }
+            &lt;/script&gt;
+        </p>
+        <span id="counter"></span>
+    </div>
+</div>
+<!--JSON-LD Schema-->
+<script>
+    var x = 1;
+    document.getElementById('counter').value = x;
+    var bread = [];
+    function addBread(){
+        bread.push("{</br>" +
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;@type&quot;: &quot;ListItem&quot;,</br>" +
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;position&quot;: "  +
+            document.getElementById('counter').value.toString() +
+            ",</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;: &quot;" +
+            document.getElementById('pageName').value.toString() +
+            "&quot;,</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;item&quot;: &quot;" +
+            document.getElementById('pageURL').value.toString() +
+            "&quot;</br>&nbsp;&nbsp;&nbsp;}");
+        document.getElementById('crumb').innerHTML = bread;
+        document.getElementById('pageName').value = "";
+        document.getElementById('pageURL').value = "";
+        x++;
+        document.getElementById('counter').value = x;
+    }
+    function takeBread(){
+        bread.pop();
+        document.getElementById('crumb').innerHTML = bread;
+        if(x !== 1){
+            x--;
+            document.getElementById('counter').value = x;
+        }
+    }
+    //
+    function select(id) {
+        window.getSelection()
+            .selectAllChildren(
+                document.getElementById("schema")
+            );
+    }
+</script>
+</body>
+</html>

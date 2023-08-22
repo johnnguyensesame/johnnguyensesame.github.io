@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8XRJPKJVEM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-8XRJPKJVEM');
+  </script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="\\sesameSchema.css">
+  <title>SERPs</title>
+  <style>
+    .text {
+      font-family: 'Roboto',arial,sans-serif;
+    }
+    h3 {
+      margin: 0;
+      padding: 0;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: normal;
+      color: #1a0dab;
+      text-align: left;
+      cursor: pointer;
+    }
+    h3:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .url {
+      font-size: 16px;
+      padding-top: 1px;
+      line-height: 1.5;
+      color: #006621;
+      font-style: normal;
+      cursor: pointer;
+    }
+    .description {
+      line-height: 1.57;
+      word-wrap: break-word;
+      color: #545454;
+      font-size: 14px;
+      text-align: left;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+<!--Schema Suite Navigation-->
+<ul class="nav">
+  <li><a href="/schema/practiceSchema.html">Practice</a></li>
+  <li><a href="/schema/serviceSchema.html">Services</a></li>
+  <li><a href="/schema/reviewSchema.html">Testimonials</a></li>
+  <li><a href="/schema/doctorSchema.html">Doctor</a></li>
+  <li><a href="/schema/meetTheTeamSchema.html">Meet The Team</a></li>
+  <li><a href="/schema/imageSchema.html">Image/Video</a></li>
+  <li><a href="/schema/FAQSchema.html">FAQ</a></li>
+  <li><a href="/schema/BreadCrumbSchema.html">Bread Crumb</a></li>
+  <li><a href="/schema/SERPs.html" style="font-weight: bold; color: blue;">SERPv1.1</a></li>
+</ul>
+<div class="row">
+  <div class="col-sm container text">
+    <table>
+      <tr>
+        <td>Title:</td>
+        <td><input id="pageTitle" type="text" size="45" maxlength="70" placeholder="70 characters" autocomplete="off" onkeyup="onKey();"></td>
+      </tr>
+      <tr>
+        <td>URL:</td>
+        <td><input id="url" type="text" size="45" placeholder="Web Page Link" autocomplete="off" onkeyup="onKey();"></td>
+      </tr>
+      <tr>
+        <td valign="top">Meta Description:</td>
+        <td><textarea  id="description" rows="4" cols="47" maxlength="150" autocomplete="off" placeholder="150 characters" onkeyup="onKey();"></textarea></td>
+      </tr>
+    </table>
+    </br>
+    <button onclick="addSerp()">Add SERP</button> <button onclick="takeSerp()">Remove SERP</button></br>
+    </br>
+    <strong>Select:</strong> <span style="color: #007bff;" onclick="select(id);">Schema</span></br>
+    <a href="https://search.google.com/structured-data/testing-tool">JSON-LD Validator</a>(F5/Refresh to clear form)</br>
+    <a href="https://github.com/gunyen/schemaForDentistAndOrthodontist">Github Repository</a>
+    </br>
+    </br>
+  </div>
+  <div class="col-sm container text">
+    <h3 style="margin: 0;" id="pt"></h3>
+    <p class="url" style="margin: 0;" id="link"></p>
+    <p class="description" id="scription"></p>
+  </div>
+  <div id="schema" onclick="select(id);" class="col-sm container text">
+    <span id="serp"></span>
+  </div>
+</div>
+<script>
+  function onKey() {
+    document.getElementById('pt').innerHTML = document.getElementById('pageTitle').value;
+    document.getElementById('link').innerHTML = document.getElementById('url').value;
+    document.getElementById('scription').innerHTML = document.getElementById('description').value;
+  }
+
+  var add = [];
+  function addSerp() {
+    add.push("<h3 style=margin:0;>" +
+            document.getElementById('pageTitle').value.toString() +
+            "</h3><p class=url style=margin:0;>" +
+            document.getElementById('url').value +
+            "</p><p class=description>" +
+            document.getElementById('description').value +
+            "</p>");
+    add.sort();
+    document.getElementById('serp').innerHTML = add.join('');
+    document.getElementById('pageTitle').value = "";
+    document.getElementById('url').value = "";
+    document.getElementById('description').value = "";
+    document.getElementById('pt').innerHTML = "";
+    document.getElementById('link').innerHTML = "";
+    document.getElementById('scription').innerHTML = "";
+  }
+  function takeSerp() {
+    add.pop();
+    document.getElementById('serp').innerHTML = add.join('');
+  }
+  function select(id) {
+    window.getSelection()
+            .selectAllChildren(
+                    document.getElementById("schema")
+            );
+  }
+</script>
+</body>
+</html>
